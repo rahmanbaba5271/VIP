@@ -1,16 +1,9 @@
--- ====================================================================
--- BRPlayerCharacterBase.lua V5755 (Modified by @UX_Official ) - VERSION 3100
--- ====================================================================
--- FITUR: ESP V2 (PlayerMapMarker), AIMBOT, MAGIC BULLET, SKIN MOD,
---        COLOR MOD, WALLHACK, KILL COUNTER, DEADBOX SKIN, BYPASS, dll
--- ====================================================================
-
 local BRPlayerCharacterBase = {
   ServerRPC = {},
   ClientRPC = {},
   MulticastRPC = {},
   LuaEventContainer = {}
-}
+}  
 BRPlayerCharacterBase.ServerRPC.ServerRPC_NearDeathGiveupRescue = {
   Reliable = true,
   Params = {}
@@ -20,7 +13,7 @@ BRPlayerCharacterBase.ServerRPC.ServerRPC_CarryDeadBox = {
   Params = {
     UEnums.EPropertyClass.Object
   }
-}
+}  
 BRPlayerCharacterBase.ServerRPC.RPC_Server_GmPlayAction = {
   Reliable = true,
   Params = {
@@ -462,4 +455,12 @@ end
 
 function BRPlayerCharacterBase:SwitchCameraToParachuteFalling()
   print(bWriteLog and "BRPlayerCharacterBase:SwitchCameraToParachuteFalling")
- 
+  self.Super:SwitchCameraToParachuteFalling()
+  if self.ParachuteFormation and self.ParachuteFormation.ShouldApplyFormationCamera and self.ParachuteFormation:ShouldApplyFormationCamera() then
+    self.ParachuteFormation:OverlayFormationCameraParams()
+    print(bWriteLog and "BRPlayerCharacterBase:SwitchCameraToParachuteFalling - Formation camera overlaid")
+  end
+end
+
+function BRPlayerCharacterBase:SwitchCameraToNormal()
+  print
